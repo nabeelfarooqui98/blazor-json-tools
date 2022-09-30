@@ -1,0 +1,48 @@
+﻿@page "/jsonformatter"
+@using JsonTools.Shared
+@inject HttpClient Http
+
+<PageTitle>JSON Formatter</PageTitle>
+
+<h1>JSON Formatter</h1>
+
+<p>Formats JSON</p>
+
+<div>
+	<div>
+		<h2>Input:</h2>
+	</div>
+	<div>
+		<textarea @bind="JsonInput" />
+		@*<textarea @bind="JsonInput" @bind:event="oninput" />*@
+	</div>
+</div>
+<div>
+	<div>
+		<h2>Output:</h2>
+	</div>
+	<div>
+		<textarea @bind="JsonOutput" />
+	</div>
+</div>
+
+<button class="btn btn-primary" @onclick="FormatJson">Format</button>
+
+
+@code {
+
+	public string JsonInput { get; set; } = string.Empty;
+	public string JsonOutput { get; set; } = string.Empty;
+
+	protected override async Task OnInitializedAsync()
+	{
+		//forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
+	}
+
+	    private void FormatJson()
+    {
+        JsonOutput = "HELLO";
+    }
+
+
+}
