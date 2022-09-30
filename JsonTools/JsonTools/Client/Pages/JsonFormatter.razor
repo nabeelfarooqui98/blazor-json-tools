@@ -1,5 +1,6 @@
 ﻿@page "/jsonformatter"
 @using JsonTools.Shared
+@using System.Text.Json
 @inject HttpClient Http
 
 <PageTitle>JSON Formatter</PageTitle>
@@ -13,7 +14,7 @@
 		<h2>Input:</h2>
 	</div>
 	<div>
-		<textarea @bind="JsonInput" />
+		<textarea @bind="JsonInput" rows="25" cols="100" />
 		@*<textarea @bind="JsonInput" @bind:event="oninput" />*@
 	</div>
 </div>
@@ -22,7 +23,7 @@
 		<h2>Output:</h2>
 	</div>
 	<div>
-		<textarea @bind="JsonOutput" />
+		<textarea @bind="JsonOutput" rows="25" cols="100" />
 	</div>
 </div>
 
@@ -39,10 +40,11 @@
 		//forecasts = await Http.GetFromJsonAsync<WeatherForecast[]>("WeatherForecast");
 	}
 
-	    private void FormatJson()
-    {
-        JsonOutput = "HELLO";
-    }
-
+	private void FormatJson()
+	{
+		using var jDoc = JsonDocument.Parse(JsonInput);
+		var output = JsonSerializer.Serialize(jDoc, new JsonSerializerOptions { WriteIndented = true });
+		JsonOutput = output;
+	}
 
 }
